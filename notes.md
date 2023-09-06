@@ -55,3 +55,63 @@ Use following command o confirm container was booted up.
 ```
 docker logs postgres
 ```
+
+Running Spring Boot Backend
+
+- We have POSTGRES container up and running, but haven't set up our database.
+- Project will therefore fail
+
+Creating our Customer Database
+```
+docker exec -it postgres sh
+```
+
+I am assuming the -it flag means to run the container in "interactive mode" like the python interpreter,
+node.js interpreter, and so on...
+
+Once you run the command, you'll be taken inside a Linux Box(mini linux ran on Macs(since there is no Mac Containers like Windows/Linux))
+
+Run the following command to login to POSTGRES inside the docker container(linux container for macs)
+```
+psql -U amigoscode -d postgres
+```
+
+List the databases
+```
+\l
+```
+
+Create the database
+```
+CREATE DATABASE customer;
+```
+
+Connect to the customer database
+```
+\c cusomter
+```
+
+Once connected, run this command to see what relations there are in the database.
+```
+\d
+```
+
+### Spring Backend should run successfully now...
+
+Once you run the application, the command line runner inside Spring Boot should initialize some information,
+along with some relations.
+
+Run again
+
+```
+\d
+```
+
+
+Cautionary Notes:
+
+For some reason, opening the whole project in IntelliJ(including the frontend) causes IntelliJ not being able to find the main class file. Without being able to run this, I cannot start the application.
+
+- Fixed issue by reopening project, but only the spring backend.
+
+TODO: Figure out how to run Spring Boot applications from the command line instead of relying on the IDE to do it for me....
