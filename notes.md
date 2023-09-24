@@ -141,3 +141,48 @@ ctrl + d
 ## Using temporary credential (local development)
 - (S3 local/temp credentials)[https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/credentials-temporary.html]
 
+## Logging into Amazon Console
+
+- Head to Identity and Access Management (IAM)
+- Head to Access Management dropdown menu on far left sidebar
+- Expand dropdown
+- Click on "Users" (An IAM user is an identity with long-term credentials that is used to interact with AWS in an account.)
+- Click on "Create User"
+- Give new user a username
+- Under "Permissions Options" (h2), click on "Add user to group"
+- Under "User Groups" (h2) select "admin", this gives our user admin priviledges
+- If that user group is NOT under user groups yet. Click on "create group" -> this will bring up an overlayed page -> under "Create user group" (h2) give the user group a name -> under "Permissions Policies" (h2) find the policy name "Administrator Access" that provides "Full Access" - > Done
+- Click "next"
+- Finish by clicking on "create user"
+
+- Click on your new user -> head to "security credentials" tab -> head to "Access Keys" tab -> click on "create access key" if you don't already have one -> when creating new access key, under "use case" click on the local code option (since this is for local development)
+
+## Using new credentials on machine....
+[Setting up aws credentials file](https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/credentials-temporary.html)
+
+- type in "cd", this will take you to the root of your computer/user
+- issue the following command ```mkdir .aws```, inside the folder create a "credentials" file.
+
+```
+[default]
+[default]
+aws_access_key_id=
+aws_secret_access_key=
+```
+- Inside use the user we created in the previous steps and input the username(id) and secret access key (password)
+
+## Working with AWS S3
+
+https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3.html
+
+Amazon S3: Object storage built to retrieve any amount of data.
+
+- To enable S3 client, paste this information into 
+
+```
+S3Client client = S3Client.builder()
+                          .region(Region.US_WEST_2)
+                          .endpointOverride(URI.create("https://s3.us-west-2.amazonaws.com"))
+                          .forcePathStyle(true)
+                          .build();
+```
