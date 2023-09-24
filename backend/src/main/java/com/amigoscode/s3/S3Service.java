@@ -5,6 +5,7 @@ import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class S3Service {
     }
     // Upload method
     // https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3-objects.html
-    public void putObject(){
+    public void putObject(String bucketName, String key, byte[] file){
 // NOTICE:
 // We have already configured the S3Client in S3Config, (no reason to create here again)
 // NOTICE:
@@ -43,7 +44,7 @@ public class S3Service {
         s3.putObject(objectRequest, RequestBody.fromBytes(file));
     }
 
-    public byte[] getObject(String bucketName, String key, byte[] file){
+    public byte[] getObject(String bucketName, String key){
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
                 .key(key)
