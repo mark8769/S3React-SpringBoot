@@ -107,7 +107,6 @@ Run again
 \d
 ```
 
-
 Cautionary Notes:
 
 For some reason, opening the whole project in IntelliJ(including the frontend) causes IntelliJ not being able to find the main class file. Without being able to run this, I cannot start the application.
@@ -115,3 +114,30 @@ For some reason, opening the whole project in IntelliJ(including the frontend) c
 - Fixed issue by reopening project, but only the spring backend.
 
 TODO: Figure out how to run Spring Boot applications from the command line instead of relying on the IDE to do it for me....
+
+
+## To disconnect from PSQL / and docker container
+
+Run this command twice
+
+```
+ctrl + d
+```
+
+# TO Start React-frontend
+
+1. Head into frontend/react/
+2. run ```npm install```
+3. run ```npm dev run```
+4. Grab credentials from startup of java backend (from database)
+
+-------------------------------------------------------------------------------------
+# Using Amazon S3
+
+## Setting S3 maven dependency in maven (pom.xml) file
+- (Maven Docs)[https://maven.apache.org/guides/getting-started/index.html]
+- (Amazon SDK docs for java)[https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/setup-project-maven.html]
+
+## Using temporary credential (local development)
+- (S3 local/temp credentials)[https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/credentials-temporary.html]
+
