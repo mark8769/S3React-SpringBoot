@@ -10,8 +10,10 @@ cors:
   exposed-headers: "*"
 
 aws:
-  region: us-west-2
-
+  region: us-east-1
+  #region: us-west-2 (Region must match the region in the amazon console for the s3 bucket.....
+  #https://stackoverflow.com/questions/25027462/aws-s3-the-bucket-you-are-attempting-to-access-must-be-addressed-using-the-spec
+  #Error: The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint. (Service: S3, Status Code: 301, Request ID: CX3K4P03P3VVF3YC, Extended Request ID: k/JdXBb84TNsrNj98lOELqQLuX4lcHhFjM39EdVUfDepVt4Cmlkxi01EPd8IqAFPH7W3AS7b8/A=)
 management:
   endpoints:
     web:
