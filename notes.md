@@ -177,7 +177,8 @@ https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/examples-s3.html
 
 Amazon S3: Object storage built to retrieve any amount of data.
 
-- To enable S3 client, paste this information into 
+- To enable S3 client, paste this information into src/main/com/amigoscode/s3/S3Config.java
+- Create the s3 class with s3.S3Config name when creating a new class inside com.amigoscode package. This will ensure to create an S3 package if not available, and put the class inside that new package.
 
 ```
 S3Client client = S3Client.builder()
@@ -186,3 +187,9 @@ S3Client client = S3Client.builder()
                           .forcePathStyle(true)
                           .build();
 ```
+
+## Using AWS Plugin for AWS Errors (possibly forgetting to put credential inside .aws/ directory) (403 Error)
+
+Intellij -> Settings(command + ,) -> plugins -> Marketplace -> Lookup AWS Toolkit
+
+[AWS Toolkit homepage](https://plugins.jetbrains.com/plugin/11349-aws-toolkit)
