@@ -3,6 +3,7 @@ package com.amigoscode;
 import com.amigoscode.customer.Customer;
 import com.amigoscode.customer.CustomerRepository;
 import com.amigoscode.customer.Gender;
+import com.amigoscode.s3.S3Buckets;
 import com.amigoscode.s3.S3Service;
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
@@ -26,7 +27,9 @@ public class Main {
     CommandLineRunner runner(
             CustomerRepository customerRepository,
             PasswordEncoder passwordEncoder,
-            S3Service s3Service) {
+            S3Service s3Service,
+            // Inject our new S3 Buckets class
+            S3Buckets s3Buckets) {
         return args -> {
 //            createRandomCustomer(customerRepository, passwordEncoder);
             s3Service.putObject(
@@ -35,7 +38,7 @@ public class Main {
                     "Hello World".getBytes()
             );
             byte[] obj = s3Service.getObject(
-                    "fs-amigoscode-customer-test-mark",
+                    s3Buckets.getCustomer(),
                     "foo"
             );
             System.out.println("Hooray: " + new String(obj));
