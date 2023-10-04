@@ -29,6 +29,7 @@ public class Main {
             PasswordEncoder passwordEncoder) {
         return args -> {
             createRandomCustomer(customerRepository, passwordEncoder);
+            // testBucketUploadAndDownload(s3Service, s3Buckets);
         };
     }
     private static void testBucketUploadAndDownload(S3Service s3Service, S3Buckets s3Buckets){

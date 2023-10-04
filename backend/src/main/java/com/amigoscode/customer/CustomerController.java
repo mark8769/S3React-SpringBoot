@@ -1,9 +1,12 @@
 package com.amigoscode.customer;
 
 import com.amigoscode.jwt.JWTUtil;
+import com.electronwill.nightconfig.core.conversion.Path;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,5 +56,23 @@ public class CustomerController {
             @RequestBody CustomerUpdateRequest updateRequest) {
         customerService.updateCustomer(customerId, updateRequest);
     }
+    @PostMapping(
+            // Have to use value keyword since we are also using the consumes
+            value = "{customerId}/profile-image",
+            // Since we are receving a file inside the Post Request
+            // https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RequestMapping.html#consumes()
+            // This is basically saying that we will only accept Files
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public void uploadCustomerProfileImage(
+            @PathVariable("customerId") Integer customerId,
+            @RequestParam("file") MultipartFile file){
+        customerService.uploadCustomerImage(customerId, file);
+    }
 
+    @GetMapping("{customerId}/profile-image")
+    public byte[] getCustomerProfileImage(
+            @PathVariable("customerId") Integer customerId){
+        return customerService.getCustomerProfileImage(customerId);
+    }
 }
