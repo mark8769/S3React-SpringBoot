@@ -26,23 +26,25 @@ public class Main {
     @Bean
     CommandLineRunner runner(
             CustomerRepository customerRepository,
-            PasswordEncoder passwordEncoder,
-            S3Service s3Service,
-            // Inject our new S3 Buckets class
-            S3Buckets s3Buckets) {
+            PasswordEncoder passwordEncoder) {
         return args -> {
-//            createRandomCustomer(customerRepository, passwordEncoder);
-            s3Service.putObject(
-                    "fs-amigoscode-customer-test-mark",
-                    "foo",
-                    "Hello World".getBytes()
-            );
-            byte[] obj = s3Service.getObject(
-                    s3Buckets.getCustomer(),
-                    "foo"
-            );
-            System.out.println("Hooray: " + new String(obj));
+            createRandomCustomer(customerRepository, passwordEncoder);
         };
+    }
+    private static void testBucketUploadAndDownload(S3Service s3Service, S3Buckets s3Buckets){
+        // Injecting the s3Service and s3Buckets class without having to instantiate them.
+        // Think of export default new (in React), don't have to instantiate because we're handing off the class.
+        // Not the same, but making the connection in similarities.
+        s3Service.putObject(
+                "fs-amigoscode-customer-test-mark",
+                "foo",
+                "Hello World".getBytes()
+        );
+        byte[] obj = s3Service.getObject(
+                s3Buckets.getCustomer(),
+                "foo"
+        );
+        System.out.println("Hooray: " + new String(obj));
     }
 
     private static void createRandomCustomer(CustomerRepository customerRepository, PasswordEncoder passwordEncoder){
