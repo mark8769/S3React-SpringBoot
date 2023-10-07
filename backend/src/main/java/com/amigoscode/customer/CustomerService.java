@@ -121,6 +121,7 @@ public class CustomerService {
     }
     public void uploadCustomerImage(Integer customerId, MultipartFile file) {
         checkIfCustomerExistsOrThrow(customerId);
+        // Generate id for profile image using UUID
         String profileImageId = UUID.randomUUID().toString();
         try {
             s3Service.putObject(
@@ -132,20 +133,23 @@ public class CustomerService {
             throw new RuntimeException(e);
         }
         // TODO: Store profileImageId image to postgres
-
+        customerDao.updateCustomerProfileImageId(profileImageId, customerId);
     }
     public byte[] getCustomerProfileImage(Integer customerId) {
         var customer = customerDao.selectCustomerById(customerId)
                 .map(customerDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with id [%s] not found".formatted(customerId)
+                        "customer with id [%s] profileImage not found".formatted(customerId)
                 ));
         // TODO: Check if profileImageId is empty or null (user has no picture)
         String profileImageId = "TODO";
+        if (customer.profileImageId().isBlank()){
+            throw new ResourceNotFoundException("customer with id [%s] not found");
+        }
 
         byte[] profileImage = s3Service.getObject(
                 s3Buckets.getCustomer(),
-                "profile-images/%s/%s".formatted(customerId, profileImageId)
+                "profile-images/%s/%s".formatted(customerId, customer.profileImageId())
         );
 
         return profileImage;
