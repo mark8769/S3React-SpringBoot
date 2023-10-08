@@ -1,7 +1,7 @@
 import {Form, Formik, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, FormLabel, Input, Image, Select, Stack, VStack} from "@chakra-ui/react";
-import {saveCustomer, updateCustomer} from "../../services/client.js";
+import {saveCustomer, updateCustomer, uploadCustomerProfilePicture} from "../../services/client.js";
 import {successNotification, errorNotification} from "../../services/notification.js";
 import React, { useCallback } from 'react'
 import Dropzone, {useDropzone} from 'react-dropzone';
@@ -25,9 +25,23 @@ const MyTextInput = ({label, ...props}) => {
     );
 };
 
-function MyDropzone() {
+function MyDropzone({customerId}) {
     const onDrop = useCallback(acceptedFiles => {
+      // Create form data obkect
+      const formData = new FormData();
+      // "File" come from our backend api that accepts a POST request with "file" param.
+      formData.append("file", acceptedFiles[0])
       // Do something with the files
+      uploadCustomerProfilePicture(
+        customerId,
+        formData
+      ).then( (res) => {
+        successNotification("Success", "Profile picture uploaded");
+        console.log(res);
+      }).catch( (err) => {
+        errorNotification("Failed", "Profile picture failed upload");
+        console.log(err);
+      })
     }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
   
@@ -63,7 +77,7 @@ const UpdateCustomerForm = ({ fetchCustomers, initialValues, customerId }) => {
                     objectFit={"cover"}
                     src={""}
                 />
-                <MyDropzone/>
+                <MyDropzone customerId={customerId}/>
             </VStack>            
             <Formik
                 initialValues={initialValues}
