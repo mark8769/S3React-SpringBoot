@@ -115,7 +115,7 @@ public class CustomerService {
     public void checkIfCustomerExistsOrThrow(Integer customerId){
         if (!customerDao.existsCustomerById(customerId)){
             throw new ResourceNotFoundException(
-                    "Customer with id [%s] not found.".formatted(customerId)
+                    "customer with id [%s] not found".formatted(customerId)
             );
         }
     }
