@@ -193,3 +193,8 @@ S3Client client = S3Client.builder()
 Intellij -> Settings(command + ,) -> plugins -> Marketplace -> Lookup AWS Toolkit
 
 [AWS Toolkit homepage](https://plugins.jetbrains.com/plugin/11349-aws-toolkit)
+
+
+## Uploading images (drag and drop files) react library
+
+(react-dropzone docs)[https://react-dropzone.js.org/]
