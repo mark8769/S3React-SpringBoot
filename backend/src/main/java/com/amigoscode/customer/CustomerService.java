@@ -5,6 +5,7 @@ import com.amigoscode.exception.RequestValidationException;
 import com.amigoscode.exception.ResourceNotFoundException;
 import com.amigoscode.s3.S3Buckets;
 import com.amigoscode.s3.S3Service;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -139,11 +140,10 @@ public class CustomerService {
         var customer = customerDao.selectCustomerById(customerId)
                 .map(customerDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "customer with id [%s] profileImage not found".formatted(customerId)
+                        "customer with id [%s] not found".formatted(customerId)
                 ));
         // TODO: Check if profileImageId is empty or null (user has no picture)
-        String profileImageId = "TODO";
-        if (customer.profileImageId().isBlank()){
+        if (StringUtils.isBlank(customer.profileImageId())){
             throw new ResourceNotFoundException("customer with id [%s] not found");
         }
 
