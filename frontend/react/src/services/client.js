@@ -64,7 +64,7 @@ export const login = async (usernameAndPassword) => {
 
 export const uploadCustomerProfilePicture = async (id, formData) => {
     try{
-        return await axios.post(
+        return axios.post(
             `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/${id}/profile-image`,
             formData,
             // ... = Spread Operator (unpack array/object into separate variables)
@@ -77,3 +77,6 @@ export const uploadCustomerProfilePicture = async (id, formData) => {
         throw e;
     }
 }
+
+export const customerProfilePictureUrl = (id) => 
+    `${import.meta.env.VITE_API_BASE_URL}/api/v1/customers/${id}/profile-image`
