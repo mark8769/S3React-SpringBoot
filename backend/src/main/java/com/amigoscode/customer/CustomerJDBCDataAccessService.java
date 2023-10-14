@@ -138,7 +138,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
 
         var sql = """
                 UPDATE customer
-                SET profileImageId = ?
+                SET profile_image_id = ?
                 WHERE id = ?
                 """;
         jdbcTemplate.update(sql, profileImageId, customerId);
